@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Concesionaria | Catálogo</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container py-3 d-flex align-items-center justify-content-between gap-3">
+      <a class="brand d-flex align-items-center gap-2 text-decoration-none" href="#">
+        <span class="brand-badge"><i class="bi bi-lightning-charge-fill"></i></span>
+        <div class="d-flex flex-column lh-1">
+          <span class="brand-title">Concesionaria</span>
+          <small class="brand-sub">Catálogo & consultas</small>
+        </div>
+      </a>
+
+      <div class="top-actions d-flex align-items-center gap-2">
+        <button class="btn btn-outline-light btn-sm" id="btnReset">
+          <i class="bi bi-arrow-counterclockwise me-1"></i> Reset
+        </button>
+        <a class="btn btn-light btn-sm" href="#catalogo">
+          <i class="bi bi-grid-3x3-gap me-1"></i> Ver autos
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+          <div class="hero-card">
+            <div class="chip mb-3"><i class="bi bi-stars me-1"></i> MVP listo para producción</div>
+            <h1 class="display-6 fw-bold mb-3">Encontrá tu próximo auto en minutos</h1>
+            <p class="text-muted mb-4">
+              Buscá por marca, año, condición, precio. Mirá fichas completas y consultá por WhatsApp o formulario.
+            </p>
+
+            <div class="row g-2">
+              <div class="col-sm-7">
+                <div class="searchbox">
+                  <i class="bi bi-search"></i>
+                  <input id="q" type="text" class="form-control form-control-lg"
+                         placeholder="Buscar: Corolla, 2022, automático, Ford..." />
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <button class="btn btn-primary btn-lg w-100" id="btnFocusFilters">
+                  <i class="bi bi-funnel me-2"></i> Filtrar
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-3 d-flex flex-wrap gap-2">
+              <span class="pill"><i class="bi bi-shield-check me-1"></i> Garantía</span>
+              <span class="pill"><i class="bi bi-cash-coin me-1"></i> Financiación</span>
+              <span class="pill"><i class="bi bi-arrow-left-right me-1"></i> Tomamos tu usado</span>
+              <span class="pill"><i class="bi bi-truck me-1"></i> Entrega rápida</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="hero-right">
+            <div class="stat">
+              <div class="stat-icon"><i class="bi bi-car-front-fill"></i></div>
+              <div>
+                <div class="stat-title" id="statTotal">0</div>
+                <div class="stat-sub">autos disponibles</div>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-icon"><i class="bi bi-tags-fill"></i></div>
+              <div>
+                <div class="stat-title" id="statMinMax">$0 - $0</div>
+                <div class="stat-sub">rango de precios</div>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
+              <div>
+                <div class="stat-title">Contactá</div>
+                <div class="stat-sub">y te respondemos al toque</div>
+              </div>
+            </div>
+
+            <div class="whats mt-3">
+              <div class="d-flex align-items-center justify-content-between gap-2">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi bi-whatsapp fs-4"></i>
+                  <div class="lh-1">
+                    <div class="fw-semibold">WhatsApp directo</div>
+                    <small class="text-muted">Editá el número en app.js</small>
+                  </div>
+                </div>
+                <a class="btn btn-success" id="btnWhatsAppGeneral" target="_blank" rel="noopener">
+                  <i class="bi bi-chat-dots me-2"></i> Escribir
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters + Catalog -->
+  <main id="catalogo" class="container py-5">
+    <div class="row g-4">
+      <!-- Filters -->
+      <aside class="col-lg-3">
+        <div class="panel sticky-lg-top" style="top: 16px;" id="filtersPanel">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h2 class="h5 m-0">Filtros</h2>
+            <button class="btn btn-sm btn-outline-secondary" id="btnClear">
+              Limpiar
+            </button>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Condición</label>
+            <div class="segmented">
+              <input type="radio" name="cond" id="condAll" value="" checked>
+              <label for="condAll">Todos</label>
+
+              <input type="radio" name="cond" id="condNuevo" value="nuevo">
+              <label for="condNuevo">Nuevos</label>
+
+              <input type="radio" name="cond" id="condUsado" value="usado">
+              <label for="condUsado">Usados</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <select class="form-select" id="brand">
+              <option value="">Todas</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Año (desde)</label>
+            <select class="form-select" id="yearMin">
+              <option value="">Cualquiera</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Precio (rango)</label>
+            <div class="row g-2">
+              <div class="col-6">
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input class="form-control" id="priceMin" placeholder="Mín" inputmode="numeric">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input class="form-control" id="priceMax" placeholder="Máx" inputmode="numeric">
+                </div>
+              </div>
+            </div>
+            <small class="text-muted d-block mt-1" id="priceHint">Tip: podés escribir 12000000</small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Ordenar</label>
+            <select class="form-select" id="sort">
+              <option value="reco">Recomendados</option>
+              <option value="price-asc">Precio: menor a mayor</option>
+              <option value="price-desc">Precio: mayor a menor</option>
+              <option value="year-desc">Año: más nuevos primero</option>
+              <option value="km-asc">KM: menor a mayor</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Resultados</label>
+            <div class="d-flex align-items-center justify-content-between">
+              <span class="badge text-bg-dark" id="count">0</span>
+              <small class="text-muted" id="meta">—</small>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" id="btnApply">
+              <i class="bi bi-check2-circle me-2"></i> Aplicar
+            </button>
+            <button class="btn btn-outline-dark" id="btnScrollTop">
+              <i class="bi bi-arrow-up me-2"></i> Subir
+            </button>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="small text-muted">
+            <div class="d-flex gap-2 align-items-center mb-1">
+              <i class="bi bi-info-circle"></i>
+              <span>Este MVP usa datos mock en <code>app.js</code>.</span>
+            </div>
+            <div>Listo para conectar a MySQL / PHP / Flask.</div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Catalog -->
+      <section class="col-lg-9">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+          <h2 class="h4 m-0">Autos disponibles</h2>
+          <div class="d-flex align-items-center gap-2">
+            <span class="text-muted small">Vista</span>
+            <div class="btn-group" role="group" aria-label="vista">
+              <button class="btn btn-outline-secondary btn-sm active" id="viewGrid">Grid</button>
+              <button class="btn btn-outline-secondary btn-sm" id="viewList">Lista</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="empty" class="empty d-none">
+          <div class="empty-card">
+            <i class="bi bi-emoji-frown"></i>
+            <h3 class="h5 mt-2">No encontramos autos con esos filtros</h3>
+            <p class="text-muted mb-3">Probá ampliar el rango de precio o borrar filtros.</p>
+            <button class="btn btn-outline-dark" id="btnEmptyReset">Reset</button>
+          </div>
+        </div>
+
+        <div id="grid" class="catalog-grid"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Detail modal -->
+  <div class="modal fade" id="carModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content modal-glass">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="mTitle">Auto</h5>
+            <div class="text-muted small" id="mSubtitle">—</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="media-card" id="mMedia">
+                <div class="media-placeholder">
+                  <i class="bi bi-image"></i>
+                  <span>Foto</span>
+                </div>
+              </div>
+
+              <div class="mt-3 d-flex flex-wrap gap-2" id="mBadges"></div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="price-line mb-2">
+                <div class="price" id="mPrice">$0</div>
+                <span class="pill-soft" id="mCond">—</span>
+              </div>
+
+              <div class="specs" id="mSpecs"></div>
+
+              <hr class="my-3">
+
+              <h6 class="mb-2">Consultar por este auto</h6>
+
+              <form id="leadForm" class="lead-form">
+                <input type="hidden" id="leadCarId" />
+                <div class="row g-2">
+                  <div class="col-sm-6">
+                    <label class="form-label">Nombre</label>
+                    <input class="form-control" id="leadName" required placeholder="Tu nombre" />
+                  </div>
+                  <div class="col-sm-6">
+                    <label class="form-label">Teléfono</label>
+                    <input class="form-control" id="leadPhone" required placeholder="+54 11 ..." />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="leadMsg" rows="3" required
+                      placeholder="Hola! Quiero info, disponibilidad, financiación..."></textarea>
+                  </div>
+                  <div class="col-12 d-grid gap-2">
+                    <button class="btn btn-primary" type="submit">
+                      <i class="bi bi-send me-2"></i> Enviar consulta
+                    </button>
+                    <a class="btn btn-success" id="mWhatsApp" target="_blank" rel="noopener">
+                      <i class="bi bi-whatsapp me-2"></i> Consultar por WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </form>
+
+              <div class="alert alert-success d-none mt-3" id="leadOk">
+                <i class="bi bi-check2-circle me-2"></i>
+                Consulta enviada (mock). Lista para conectar a backend.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <small class="text-muted">Tip: conectá el submit del formulario a tu API en PHP/Flask.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container py-4 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+      <div class="text-muted small">© <span id="yearNow"></span> Concesionaria — MVP Catálogo</div>
+      <div class="text-muted small d-flex gap-3">
+        <span><i class="bi bi-speedometer2 me-1"></i> Rápido</span>
+        <span><i class="bi bi-phone me-1"></i> Responsive</span>
+        <span><i class="bi bi-plug me-1"></i> Listo para backend</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
